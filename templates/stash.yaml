@@ -1,0 +1,182 @@
+mode: rule
+log-level: warning
+allow-lan: true
+
+dns:
+  default-nameserver:
+    - 1.1.1.1
+    - 8.8.8.8
+    - 9.9.9.9
+  nameserver:
+    - https://cloudflare-dns.com/dns-query
+    - https://dns.google/dns-query
+    - https://dns.quad9.net/dns-query
+
+proxy-groups:
+  - name: "🚀 Proxy"
+    type: select
+    proxies: # LEAVE THIS LINE!
+
+  - name: "♻️ Auto"
+    type: url-test
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+    proxies: # LEAVE THIS LINE!
+
+  - name: "🌐 Global"
+    type: select
+    proxies: ["🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🤖 AI"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "📺 YouTube"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🎬 Streaming"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "💬 Messaging"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🎮 Games"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "👨‍💻 GitHub"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🐦 Social"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "₿ Crypto"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🍎 Apple"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "Ⓜ️ Microsoft"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🔍 Google"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🌏 Regional"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🇨🇳 China"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🇷🇺 Russia"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🇮🇷 Iran"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🇯🇵 Japan"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🇰🇷 Korea"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🇸🇬 Singapore"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🇺🇸 United States"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🇪🇺 Europe"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🛑 Ads"
+    type: select
+    proxies: [REJECT, DIRECT]
+  - name: "🏠 Local"
+    type: select
+    proxies: [DIRECT]
+  - name: "🐟 Final"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+
+proxies: # LEAVE THIS LINE!
+
+rules:
+  - DOMAIN-KEYWORD,ads,🛑 Ads
+  - DOMAIN-SUFFIX,doubleclick.net,🛑 Ads
+  - DOMAIN-SUFFIX,googlesyndication.com,🛑 Ads
+  - DOMAIN-SUFFIX,googleadservices.com,🛑 Ads
+  - DOMAIN-SUFFIX,local,🏠 Local
+  - DOMAIN-SUFFIX,lan,🏠 Local
+  - DOMAIN,localhost,🏠 Local
+  - IP-CIDR,10.0.0.0/8,🏠 Local,no-resolve
+  - IP-CIDR,100.64.0.0/10,🏠 Local,no-resolve
+  - IP-CIDR,127.0.0.0/8,🏠 Local,no-resolve
+  - IP-CIDR,169.254.0.0/16,🏠 Local,no-resolve
+  - IP-CIDR,172.16.0.0/12,🏠 Local,no-resolve
+  - IP-CIDR,192.168.0.0/16,🏠 Local,no-resolve
+  - IP-CIDR,224.0.0.0/4,🏠 Local,no-resolve
+  - IP-CIDR6,::1/128,🏠 Local,no-resolve
+  - IP-CIDR6,fc00::/7,🏠 Local,no-resolve
+  - IP-CIDR6,fe80::/10,🏠 Local,no-resolve
+  - DOMAIN-SUFFIX,openai.com,🤖 AI
+  - DOMAIN-SUFFIX,chatgpt.com,🤖 AI
+  - DOMAIN-SUFFIX,anthropic.com,🤖 AI
+  - DOMAIN-SUFFIX,claude.ai,🤖 AI
+  - DOMAIN-SUFFIX,gemini.google.com,🤖 AI
+  - DOMAIN-SUFFIX,perplexity.ai,🤖 AI
+  - DOMAIN-SUFFIX,copilot.microsoft.com,🤖 AI
+  - DOMAIN-SUFFIX,youtube.com,📺 YouTube
+  - DOMAIN-SUFFIX,googlevideo.com,📺 YouTube
+  - DOMAIN-SUFFIX,ytimg.com,📺 YouTube
+  - DOMAIN-SUFFIX,netflix.com,🎬 Streaming
+  - DOMAIN-SUFFIX,nflxvideo.net,🎬 Streaming
+  - DOMAIN-SUFFIX,disneyplus.com,🎬 Streaming
+  - DOMAIN-SUFFIX,hulu.com,🎬 Streaming
+  - DOMAIN-SUFFIX,max.com,🎬 Streaming
+  - DOMAIN-SUFFIX,primevideo.com,🎬 Streaming
+  - DOMAIN-SUFFIX,spotify.com,🎬 Streaming
+  - DOMAIN-SUFFIX,tiktok.com,🎬 Streaming
+  - DOMAIN-SUFFIX,telegram.org,💬 Messaging
+  - DOMAIN-SUFFIX,t.me,💬 Messaging
+  - DOMAIN-SUFFIX,discord.com,💬 Messaging
+  - DOMAIN-SUFFIX,whatsapp.com,💬 Messaging
+  - DOMAIN-SUFFIX,signal.org,💬 Messaging
+  - DOMAIN-SUFFIX,line.me,💬 Messaging
+  - DOMAIN-SUFFIX,steampowered.com,🎮 Games
+  - DOMAIN-SUFFIX,steamcommunity.com,🎮 Games
+  - DOMAIN-SUFFIX,epicgames.com,🎮 Games
+  - DOMAIN-SUFFIX,battle.net,🎮 Games
+  - DOMAIN-SUFFIX,riotgames.com,🎮 Games
+  - DOMAIN-SUFFIX,xboxlive.com,🎮 Games
+  - DOMAIN-SUFFIX,playstation.net,🎮 Games
+  - DOMAIN-SUFFIX,nintendo.com,🎮 Games
+  - DOMAIN-SUFFIX,github.com,👨‍💻 GitHub
+  - DOMAIN-SUFFIX,githubusercontent.com,👨‍💻 GitHub
+  - DOMAIN-SUFFIX,x.com,🐦 Social
+  - DOMAIN-SUFFIX,twitter.com,🐦 Social
+  - DOMAIN-SUFFIX,facebook.com,🐦 Social
+  - DOMAIN-SUFFIX,instagram.com,🐦 Social
+  - DOMAIN-SUFFIX,threads.net,🐦 Social
+  - DOMAIN-SUFFIX,reddit.com,🐦 Social
+  - DOMAIN-SUFFIX,linkedin.com,🐦 Social
+  - DOMAIN-SUFFIX,pinterest.com,🐦 Social
+  - DOMAIN-SUFFIX,binance.com,₿ Crypto
+  - DOMAIN-SUFFIX,coinbase.com,₿ Crypto
+  - DOMAIN-SUFFIX,okx.com,₿ Crypto
+  - DOMAIN-SUFFIX,kraken.com,₿ Crypto
+  - DOMAIN-SUFFIX,bybit.com,₿ Crypto
+  - DOMAIN-SUFFIX,apple.com,🍎 Apple
+  - DOMAIN-SUFFIX,icloud.com,🍎 Apple
+  - DOMAIN-SUFFIX,microsoft.com,Ⓜ️ Microsoft
+  - DOMAIN-SUFFIX,windows.com,Ⓜ️ Microsoft
+  - DOMAIN-SUFFIX,live.com,Ⓜ️ Microsoft
+  - DOMAIN-SUFFIX,office.com,Ⓜ️ Microsoft
+  - DOMAIN-SUFFIX,google.com,🔍 Google
+  - DOMAIN-SUFFIX,gstatic.com,🔍 Google
+  - DOMAIN-SUFFIX,googleapis.com,🔍 Google
+  - GEOIP,CN,🇨🇳 China
+  - GEOIP,RU,🇷🇺 Russia
+  - GEOIP,IR,🇮🇷 Iran
+  - GEOIP,JP,🇯🇵 Japan
+  - GEOIP,KR,🇰🇷 Korea
+  - GEOIP,SG,🇸🇬 Singapore
+  - GEOIP,US,🇺🇸 United States
+  - MATCH,🐟 Final

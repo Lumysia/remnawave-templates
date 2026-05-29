@@ -1,0 +1,554 @@
+{
+  "dns": {
+    "rules": [
+      {
+        "server": "remote",
+        "query_type": [
+          "A",
+          "AAAA"
+        ]
+      },
+      {
+        "server": "local",
+        "outbound": "any"
+      }
+    ],
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
+    },
+    "servers": [
+      {
+        "tag": "cloudflare-dns",
+        "address": "tls://1.1.1.1"
+      },
+      {
+        "tag": "google-dns",
+        "address": "tls://8.8.8.8"
+      },
+      {
+        "tag": "quad9-dns",
+        "address": "tls://9.9.9.9"
+      },
+      {
+        "tag": "local",
+        "detour": "direct",
+        "address": "tls://1.1.1.1",
+        "strategy": "prefer_ipv4"
+      },
+      {
+        "tag": "remote",
+        "address": "fakeip"
+      }
+    ],
+    "independent_cache": true
+  },
+  "log": {
+    "level": "info",
+    "disabled": false,
+    "timestamp": true
+  },
+  "route": {
+    "rules": [
+      {
+        "action": "sniff"
+      },
+      {
+        "mode": "or",
+        "type": "logical",
+        "rules": [
+          {
+            "protocol": "dns"
+          },
+          {
+            "port": 53
+          }
+        ],
+        "action": "hijack-dns"
+      },
+      {
+        "rule_set": [
+          "ads"
+        ],
+        "outbound": "Ads"
+      },
+      {
+        "domain_suffix": [
+          "local",
+          "lan"
+        ],
+        "outbound": "Local"
+      },
+      {
+        "domain": [
+          "localhost"
+        ],
+        "outbound": "Local"
+      },
+      {
+        "ip_is_private": true,
+        "outbound": "Local"
+      },
+      {
+        "ip_cidr": [
+          "224.0.0.0/4",
+          "ff00::/8",
+          "fe80::/10"
+        ],
+        "outbound": "Local"
+      },
+      {
+        "rule_set": [
+          "ai"
+        ],
+        "outbound": "AI"
+      },
+      {
+        "rule_set": [
+          "youtube"
+        ],
+        "outbound": "YouTube"
+      },
+      {
+        "rule_set": [
+          "streaming"
+        ],
+        "outbound": "Streaming"
+      },
+      {
+        "rule_set": [
+          "messaging"
+        ],
+        "outbound": "Messaging"
+      },
+      {
+        "rule_set": [
+          "games"
+        ],
+        "outbound": "Games"
+      },
+      {
+        "rule_set": [
+          "github"
+        ],
+        "outbound": "GitHub"
+      },
+      {
+        "rule_set": [
+          "social"
+        ],
+        "outbound": "Social"
+      },
+      {
+        "rule_set": [
+          "crypto"
+        ],
+        "outbound": "Crypto"
+      },
+      {
+        "rule_set": [
+          "apple"
+        ],
+        "outbound": "Apple"
+      },
+      {
+        "rule_set": [
+          "microsoft"
+        ],
+        "outbound": "Microsoft"
+      },
+      {
+        "rule_set": [
+          "google"
+        ],
+        "outbound": "Google"
+      },
+      {
+        "rule_set": [
+          "china-ip"
+        ],
+        "outbound": "China"
+      },
+      {
+        "rule_set": [
+          "russia-ip"
+        ],
+        "outbound": "Russia"
+      },
+      {
+        "rule_set": [
+          "iran-ip"
+        ],
+        "outbound": "Iran"
+      },
+      {
+        "rule_set": [
+          "japan-ip"
+        ],
+        "outbound": "Japan"
+      },
+      {
+        "rule_set": [
+          "korea-ip"
+        ],
+        "outbound": "Korea"
+      },
+      {
+        "rule_set": [
+          "singapore-ip"
+        ],
+        "outbound": "Singapore"
+      },
+      {
+        "rule_set": [
+          "united-states-ip"
+        ],
+        "outbound": "United States"
+      }
+    ],
+    "rule_set": [
+      {
+        "tag": "ads",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-ads-all.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "ai",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-ai-!cn.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "youtube",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-youtube.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "streaming",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-media.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "messaging",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-communication.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "games",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-games.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "github",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-github.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "social",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-social-media-!cn.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "crypto",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-binance.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "apple",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-apple.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "microsoft",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-microsoft.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "google",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-google.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "china-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "russia-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-ru.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "iran-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-ir.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "japan-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-jp.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "korea-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-kr.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "singapore-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-sg.srs",
+        "download_detour": "Proxy"
+      },
+      {
+        "tag": "united-states-ip",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-us.srs",
+        "download_detour": "Proxy"
+      }
+    ],
+    "final": "Final",
+    "override_android_vpn": true,
+    "auto_detect_interface": true
+  },
+  "inbounds": [
+    {
+      "mtu": 9000,
+      "tag": "tun-in",
+      "type": "tun",
+      "sniff": true,
+      "stack": "mixed",
+      "platform": {
+        "http_proxy": {
+          "server": "127.0.0.1",
+          "enabled": true,
+          "server_port": 2412
+        }
+      },
+      "auto_route": true,
+      "strict_route": true,
+      "inet4_address": "172.19.0.1/30",
+      "inet6_address": "fdfe:dcba:9876::1/126",
+      "interface_name": "tun125",
+      "endpoint_independent_nat": true
+    },
+    {
+      "tag": "mixed-in",
+      "type": "mixed",
+      "sniff": true,
+      "users": [],
+      "listen": "127.0.0.1",
+      "listen_port": 2412,
+      "set_system_proxy": false
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "Proxy",
+      "type": "selector",
+      "outbounds": null,
+      "interrupt_exist_connections": true
+    },
+    {
+      "tag": "Auto",
+      "type": "selector",
+      "outbounds": [
+        "Proxy"
+      ],
+      "interrupt_exist_connections": true
+    },
+    {
+      "tag": "Global",
+      "type": "selector",
+      "outbounds": [
+        "Proxy",
+        "Auto",
+        "direct"
+      ],
+      "interrupt_exist_connections": true
+    },
+    {
+      "tag": "AI",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "YouTube",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Streaming",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Messaging",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Games",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "GitHub",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Social",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Crypto",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Apple",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Microsoft",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Google",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Regional",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "China",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Russia",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Iran",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Japan",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Korea",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Singapore",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "United States",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Europe",
+      "type": "selector",
+      "outbounds": ["Global", "Proxy", "Auto", "direct"]
+    },
+    {
+      "tag": "Ads",
+      "type": "selector",
+      "outbounds": [
+        "block",
+        "direct"
+      ]
+    },
+    {
+      "tag": "Local",
+      "type": "selector",
+      "outbounds": [
+        "direct"
+      ]
+    },
+    {
+      "tag": "Final",
+      "type": "selector",
+      "outbounds": [
+        "Global",
+        "Proxy",
+        "Auto",
+        "direct"
+      ]
+    },
+    {
+      "tag": "direct",
+      "type": "direct"
+    },
+    {
+      "tag": "block",
+      "type": "block"
+    }
+  ],
+  "experimental": {
+    "clash_api": {
+      "external_ui": "yacd",
+      "default_mode": "rule",
+      "external_controller": "127.0.0.1:9090",
+      "external_ui_download_url": "https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip",
+      "external_ui_download_detour": "direct"
+    },
+    "cache_file": {
+      "path": "remnawave.db",
+      "enabled": true,
+      "cache_id": "remnawave",
+      "store_fakeip": true
+    }
+  }
+}

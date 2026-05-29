@@ -1,0 +1,328 @@
+mixed-port: 7890
+socks-port: 7891
+redir-port: 7892
+allow-lan: true
+mode: rule
+log-level: info
+external-controller: 127.0.0.1:9090
+
+dns:
+  enable: true
+  use-hosts: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  default-nameserver:
+    - 1.1.1.1
+    - 8.8.8.8
+    - 9.9.9.9
+  nameserver:
+    - https://cloudflare-dns.com/dns-query
+    - https://dns.google/dns-query
+    - https://dns.quad9.net/dns-query
+  fake-ip-filter:
+    - "*.lan"
+    - "*.local"
+    - "localhost"
+    - "time.*.com"
+    - "time.*.gov"
+    - "time.*.edu"
+    - "time.*.apple.com"
+    - "time-ios.apple.com"
+    - "pool.ntp.org"
+    - "*.pool.ntp.org"
+    - "*.stun.*.*"
+    - "stun.*.*"
+    - "stun.*"
+    - "*.msftconnecttest.com"
+    - "*.msftncsi.com"
+    - "+.xboxlive.com"
+    - "*.*.stun.playstation.net"
+
+proxies: # LEAVE THIS LINE!
+
+proxy-groups:
+  - name: "🚀 Proxy"
+    type: select
+    proxies: # LEAVE THIS LINE!
+
+  - name: "♻️ Auto"
+    type: url-test
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+    tolerance: 80
+    lazy: true
+    proxies: # LEAVE THIS LINE!
+
+  - name: "🌐 Global"
+    type: select
+    proxies:
+      - "🚀 Proxy"
+      - "♻️ Auto"
+      - DIRECT
+
+  - name: "🤖 AI"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "📺 YouTube"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🎬 Streaming"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "💬 Messaging"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🎮 Games"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "👨‍💻 GitHub"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🐦 Social"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "₿ Crypto"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🍎 Apple"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "Ⓜ️ Microsoft"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🔍 Google"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+
+  - name: "🌏 Regional"
+    type: select
+    proxies:
+      - "🌐 Global"
+      - "🚀 Proxy"
+      - "♻️ Auto"
+      - DIRECT
+  - name: "🇨🇳 China"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🇷🇺 Russia"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🇮🇷 Iran"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🇯🇵 Japan"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🇰🇷 Korea"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🇸🇬 Singapore"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🇺🇸 United States"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+  - name: "🇪🇺 Europe"
+    type: select
+    proxies: ["🌐 Global", "🚀 Proxy", "♻️ Auto", DIRECT]
+
+  - name: "🛑 Ads"
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies: [REJECT, DIRECT]
+  - name: "🏠 Local"
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies: [DIRECT]
+  - name: "🐟 Final"
+    type: select
+    proxies:
+      - "🌐 Global"
+      - "🚀 Proxy"
+      - "♻️ Auto"
+      - DIRECT
+
+rule-providers:
+  ads:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    path: ./ruleset/ads.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ads-all.mrs
+  ai:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    path: ./ruleset/ai.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ai-!cn.mrs
+  youtube:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    path: ./ruleset/youtube.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/youtube.mrs
+  streaming:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    path: ./ruleset/streaming.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-media.mrs
+  messaging:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    path: ./ruleset/messaging.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-communication.mrs
+  games:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    path: ./ruleset/games.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-games.mrs
+  github:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    path: ./ruleset/github.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/github.mrs
+  social:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    path: ./ruleset/social.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-social-media-!cn.mrs
+  crypto:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    path: ./ruleset/crypto.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/binance.mrs
+  apple:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    path: ./ruleset/apple.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/apple.mrs
+  microsoft:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    path: ./ruleset/microsoft.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/microsoft.mrs
+  google:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    path: ./ruleset/google.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/google.mrs
+  china-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    path: ./ruleset/china-ip.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cn.mrs
+  russia-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    path: ./ruleset/russia-ip.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/ru.mrs
+  iran-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    path: ./ruleset/iran-ip.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/ir.mrs
+  japan-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    path: ./ruleset/japan-ip.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/jp.mrs
+  korea-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    path: ./ruleset/korea-ip.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/kr.mrs
+  singapore-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    path: ./ruleset/singapore-ip.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/sg.mrs
+  united-states-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    path: ./ruleset/united-states-ip.mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/us.mrs
+
+rules:
+  - RULE-SET,ads,🛑 Ads
+  - DOMAIN-SUFFIX,local,🏠 Local
+  - DOMAIN-SUFFIX,lan,🏠 Local
+  - DOMAIN,localhost,🏠 Local
+  - IP-CIDR,0.0.0.0/8,🏠 Local,no-resolve
+  - IP-CIDR,10.0.0.0/8,🏠 Local,no-resolve
+  - IP-CIDR,100.64.0.0/10,🏠 Local,no-resolve
+  - IP-CIDR,127.0.0.0/8,🏠 Local,no-resolve
+  - IP-CIDR,169.254.0.0/16,🏠 Local,no-resolve
+  - IP-CIDR,172.16.0.0/12,🏠 Local,no-resolve
+  - IP-CIDR,192.168.0.0/16,🏠 Local,no-resolve
+  - IP-CIDR,224.0.0.0/4,🏠 Local,no-resolve
+  - IP-CIDR6,::1/128,🏠 Local,no-resolve
+  - IP-CIDR6,fc00::/7,🏠 Local,no-resolve
+  - IP-CIDR6,fe80::/10,🏠 Local,no-resolve
+  - IP-CIDR6,ff00::/8,🏠 Local,no-resolve
+  - RULE-SET,ai,🤖 AI
+  - DOMAIN-SUFFIX,claude.ai,🤖 AI
+  - DOMAIN-SUFFIX,perplexity.ai,🤖 AI
+  - RULE-SET,youtube,📺 YouTube
+  - RULE-SET,streaming,🎬 Streaming
+  - DOMAIN-SUFFIX,max.com,🎬 Streaming
+  - DOMAIN-SUFFIX,primevideo.com,🎬 Streaming
+  - RULE-SET,messaging,💬 Messaging
+  - RULE-SET,games,🎮 Games
+  - DOMAIN-SUFFIX,battle.net,🎮 Games
+  - DOMAIN-SUFFIX,riotgames.com,🎮 Games
+  - RULE-SET,github,👨‍💻 GitHub
+  - RULE-SET,social,🐦 Social
+  - DOMAIN-SUFFIX,threads.net,🐦 Social
+  - RULE-SET,crypto,₿ Crypto
+  - DOMAIN-SUFFIX,coinbase.com,₿ Crypto
+  - DOMAIN-SUFFIX,okx.com,₿ Crypto
+  - DOMAIN-SUFFIX,kraken.com,₿ Crypto
+  - DOMAIN-SUFFIX,bybit.com,₿ Crypto
+  - RULE-SET,apple,🍎 Apple
+  - RULE-SET,microsoft,Ⓜ️ Microsoft
+  - RULE-SET,google,🔍 Google
+  - RULE-SET,china-ip,🇨🇳 China,no-resolve
+  - RULE-SET,russia-ip,🇷🇺 Russia,no-resolve
+  - RULE-SET,iran-ip,🇮🇷 Iran,no-resolve
+  - RULE-SET,japan-ip,🇯🇵 Japan,no-resolve
+  - RULE-SET,korea-ip,🇰🇷 Korea,no-resolve
+  - RULE-SET,singapore-ip,🇸🇬 Singapore,no-resolve
+  - RULE-SET,united-states-ip,🇺🇸 United States,no-resolve
+  - MATCH,🐟 Final
