@@ -2,7 +2,7 @@ import json
 import re
 from pathlib import Path
 
-SUBPAGE = Path("subpage-00000000-0000-0000-0000-000000000000.json")
+SUBPAGE = Path("subpage.json")
 I18N_DIR = Path("tools/subpage-i18n")
 
 LOCALES = [

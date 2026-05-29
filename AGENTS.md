@@ -5,7 +5,7 @@ This repository contains Remnawave subscription templates and one Remnawave subs
 ## Scope
 
 - Subscription templates live in `templates/`.
-- The subscription page is `subpage-00000000-0000-0000-0000-000000000000.json`.
+- The subscription page is `subpage.json`.
 - Subscription page translations live in `tools/subpage-i18n/` and are applied by `tools/localize_subpage.py`.
 
 ## Template Rules

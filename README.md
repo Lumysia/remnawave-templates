@@ -9,7 +9,7 @@ International, proxy-first Remnawave subscription templates and a curated subscr
 - `templates/stash.yaml`
 - `templates/singbox.json`
 - `templates/clash.yaml`
-- `subpage-00000000-0000-0000-0000-000000000000.json`
+- `subpage.json`
 
 ## Notes
 
