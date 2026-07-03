@@ -43,3 +43,7 @@ Thumbs.db
 
 # Local config directory
 config/
+
+# Local Remnawave exports
+/Entry.json
+/Exit.json

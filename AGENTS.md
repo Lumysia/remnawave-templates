@@ -17,6 +17,19 @@ This repository contains Remnawave subscription templates and one Remnawave subs
 - Keep `Final` proxy-first.
 - Keep group/tag/rule names English.
 
+## Reality Target Rules
+
+- Do not choose Reality targets by guesswork; verify each candidate before using it.
+- Prefer durable software distribution, package registry, artifact, or CDN file endpoints over marketing homepages.
+- Do not use targets backed by Cloudflare CDN.
+- Avoid overused or heavily fingerprinted targets such as Apple, Microsoft, and Amazon unless explicitly requested.
+- Check that the candidate supports TLS 1.3, offers ALPN `h2`, and has a certificate SAN matching the exact SNI.
+- Check that `HEAD /` with the candidate SNI does not redirect to another hostname.
+- Identify the CDN or edge provider from DNS, certificates, headers, ASN, or public documentation; reject Cloudflare DNS, `server: cloudflare`, `cf-ray`, AS13335, and other Cloudflare indicators.
+- Prefer targets without mainland China CDN service for this repository's default templates.
+- Match each inbound port to one primary SNI: `target`, `serverNames[0]`, client SNI, and gateway SNI route must agree.
+- Use targets whose normal traffic pattern can plausibly include sustained downloads, uploads, and bursty transfers.
+
 ## Subscription Page Rules
 
 - Prefer widely used clients with strong GitHub/community recognition.
