@@ -29,6 +29,7 @@ This repository contains Remnawave subscription templates and one Remnawave subs
 - Prefer targets without mainland China CDN service for this repository's default templates.
 - Match each inbound port to one primary SNI: `target`, `serverNames[0]`, client SNI, and gateway SNI route must agree.
 - Use targets whose normal traffic pattern can plausibly include sustained downloads, uploads, and bursty transfers.
+- When changing `Entry.json` or `Exit.json` Reality targets, give the user the full replacement `COMMON_ENTRY_GATEWAY_TLS_ROUTES` value as one env assignment line: `COMMON_ENTRY_GATEWAY_TLS_ROUTES=<sni>=127.0.0.1:<port>,<sni>=127.0.0.1:<port>,...`. Remind them to sync Yggdrasil, then run the `Redeploy Entry Gateways` Komodo action.
 
 ## Subscription Page Rules
 
